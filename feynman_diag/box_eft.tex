@@ -1,0 +1,45 @@
+\documentclass[tikz,border=2mm]{standalone}
+\usepackage{tikz}
+\usepackage{tikz-feynman}
+\tikzfeynmanset{compat=1.1.0}
+
+\begin{document}
+
+\begin{tikzpicture}
+\begin{feynman}
+    % Vertici principali
+    \vertex [inner sep=0pt](i1) at (0,0.8) {$\psi_1$};
+    \vertex [inner sep=0pt](i2) at (0,-0.8) {$\psi_2$};
+    \vertex [inner sep=0pt](v1) at (1.6,0.8) {};
+    \vertex [inner sep=0pt](v2) at (1.6,-0.8) {};
+    \vertex [inner sep=0pt](f1) at (3.2,0.8) {$\psi_3$};
+    \vertex [inner sep=0pt](f2) at (3.2,-0.8) {$\psi_4$};
+
+    % Marker visibili
+    \node[circle, fill=black, inner sep=1.5pt] at (v1) {};
+    \node[circle, fill=black, inner sep=1.5pt] at (v2) {};
+
+    % Diagramma
+    \diagram* {
+        (i1) -- [fermion, line width=1.2pt] (v1),
+        (v2) -- [fermion, line width=1.2pt] (i2),
+        
+        % --- LOOP chiuso ---
+        (v1) -- [fermion, half right, looseness=1.2, line width=1.2pt] (v2),
+        (v2) -- [fermion, half right, looseness=1.2, line width=1.2pt] (v1),
+        % --------------------
+
+        (v1) -- [fermion, line width=1.2pt] (f1),
+        (f2) -- [fermion, line width=1.2pt] (v2),
+    };
+\end{feynman}
+\end{tikzpicture}
+
+\end{document}
+
+
+\end{document}
+
+% pdflatex feynman_diag.tex
+
+% pdftoppm -png -r 300 feynman_diag.pdf feynman_diag
